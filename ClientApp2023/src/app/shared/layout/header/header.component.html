@@ -1,0 +1,325 @@
+<header class="header-main_area">
+    <div class="header-top_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="ht-left_area">
+                        <div class="header-shipping_area">
+                            <ul>
+                                <li>
+                                    <span>Điện Thoại:</span>
+                                    <a href="callto://+123123321345">(+84) 734 143 46</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="ht-right_area">
+                        <div class="ht-menu">
+                            <ul>
+                                <li><a href="javascript:void(0)">Tiền Tệ<i class="fa fa-chevron-down"></i></a>
+                                    <ul class="ht-dropdown ht-currency">
+                                        <li><a href="javascript:void(0)">€ EUR</a></li>
+                                        <li class="active"><a href="javascript:void(0)">đ VND</a></li>
+                                        <li><a href="javascript:void(0)">$ Us Dollar</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="javascript:void(0)">Ngôn Ngữ <i class="fa fa-chevron-down"></i></a>
+                                    <ul class="ht-dropdown">
+                                        <li class="active"><a href="javascript:void(0)"><img src="assets/images/menu/icon/1.jpg" alt="JB's Language Icon">English</a></li>
+                                        <li><a href="javascript:void(0)"><img src="assets/images/menu/icon/2.jpg" alt="JB's Language Icon">Français</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a>Tài Khoản<i class="fa fa-chevron-down"></i></a>
+                                    <ul class="ht-dropdown ht-my_account">
+                                        <li *ngIf="user.loaiQuyen == 'User'"><a>{{user.hoTen}}</a></li>
+                                        <li *ngIf="user.loaiQuyen == 'User'"><a>Đổi Mật Khẩu</a></li>
+                                        <li class="active"(click)="dangnhap()"  ><a>Đăng Nhập</a></li>
+                                        <li *ngIf="user.loaiQuyen == 'User'"><a (click)="logout()" >Đăng Xuất</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-middle_area d-none d-lg-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header-logo">
+                        <a href="#">
+                            <img src="assets/images/menu/logo/1.png" alt="Hiraola's Header Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="hm-form_area">
+                        <form [formGroup]="frmSearch" class="hm-searchbox" (ngSubmit)="LoadData()">
+                            <select class="nice-select select-search-category" formControlName="txt_tendanhmuc">
+                                <option [value]="''">Loại</option>	
+                                <option *ngFor="let lsp of danh_sach_danh_muc" value="{{lsp.tenDanhMuc}}">{{lsp.tenDanhMuc}}</option>										
+                            </select>
+                            <!-- <select formControlName="txt_tendanhmuc" class="form-control"placeholder="Quyền">
+                                <option [value]="''">Quyền</option>										
+                                <option [value]="'Admin'">Admin</option>
+                                <option [value]="'User'">User</option>
+                            </select> -->
+                            <input class="select-search-category" type="text" formControlName="txt_tendanhmuc" placeholder="tìm kiếm theo tên loại ...">
+                            <input type="text" formControlName="txt_tensanpham" placeholder="tìm kiếm theo tên sản phẩm ...">
+                            <button class="li-btn" (click)="createModal()" data-toggle="modal" data-target="#exampleModal" type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-bottom_area header-sticky stick">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-4 d-lg-none d-block">
+                    <div class="header-logo">
+                        <a href="#">
+                            <img src="assets/images/menu/logo/2.png" alt="Hiraola's Header Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9 d-none d-lg-block position-static">
+                    <div class="main-menu_area">
+                        <nav>
+                            <ul>
+                                <li class="dropdown-holder"><a [routerLink]="['/']">Trang Chủ</a>                                   
+                                </li>
+                                <li class="megamenu-holder"><a [routerLink]="['/san-pham']">Sản Phẩm</a>                                  
+                                </li>
+                                <li class="dropdown-holder"><a>Nhóm Sản Phẩm</a>
+                                    <ul class="hm-dropdown" style="padding: 15px; text-align: center;" >  
+                                        <li  *ngFor="let x of danh_sach_nhom ">
+                                            <img  [routerLink]="['/nhom-san-pham', x.maNhomSanPham]" style="width: 250px;height: 80px;"  src="{{x.anhNhom}}" alt="#">
+                                            <a [routerLink]="['/nhom-san-pham', x.maNhomSanPham]" >{{x.tenNhom}}</a>
+                                                
+                                        </li>  
+                                        <li class="menu-item_img"></li>
+                                    </ul>
+                                </li>
+                                <li><a [routerLink]="['/tin-tuc']">Tin Tức</a>
+                                </li>
+                                <li class="dropdown-holder"><a>Thương Hiệu</a>
+                                    <ul class="hm-dropdown" >
+                                        <li *ngFor="let x of thuong_hieu"><a>{{x.tenNhaSanXuat}}</a></li>
+                                        
+                                    </ul>
+                                </li>
+
+                                <li><a [routerLink]="['/gioi-thieu']">Giới Thiệu</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-8 col-sm-8">
+                    <div class="header-right_area">
+                        <ul>
+                            <li>
+                                <a href="wishlist.html" class="wishlist-btn">
+                                    <i class="ion-android-favorite-outline"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn color--white d-lg-none d-block">
+                                    <i class="ion-navicon"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#miniCart" class="minicart-btn toolbar-btn">
+                                    <i class="ion-bag"></i>  <span  style="position: absolute ; top:0px; right: 15px; width: 23px ; height: 23px ; border-radius: 50% ; background-color: rgb(128, 0, 255) ; font-size:14px ; line-height:20px ; text-align: center; color: white; font-weight: bold;">{{sosanphams}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas-minicart_wrapper" id="miniCart">
+        <div class="offcanvas-menu-inner" >
+            <a href="#" class="btn-close"><i class="ion-android-close"></i>
+            </a>
+          
+            <div class="minicart-content">
+                <div class="minicart-heading">
+                    <h4>Giỏ Hàng</h4>
+                </div>
+                <ul class="minicart-list" *ngFor="let x of list">
+                    <li class="minicart-product">
+                        <a class="product-item_remove" (click)="Xoa(x.maSanPham)"><i class="ion-android-close"></i></a>
+                        <div class="product-item_img">
+                            <img [src]="x.anhDaiDien" alt="Hiraola's Product Image">
+                        </div>
+                        <div class="product-item_content">
+                            <a class="product-item_title" href="shop-left-sidebar.html">{{x.tenSanPham}}</a>
+                            <span class="product-item_quantity">{{x.gia}}đ</span>
+                        </div>
+                    </li>                    
+                </ul>
+            </div>
+            <div class="minicart-item_total">
+                <span>Tổng:</span>
+                <span class="ammount">{{tTong}}đ</span>
+            </div>
+            <div class="minicart-btn_area">
+                <a [routerLink]="['/customers/cart']" class="hiraola-btn hiraola-btn_dark hiraola-btn_fullwidth">Giỏ Hàng</a>
+            </div>
+            <div class="minicart-btn_area">
+                <a [routerLink]="['/customers/check-out']" class="hiraola-btn hiraola-btn_dark hiraola-btn_fullwidth">Thanh Toán</a>
+            </div>
+        </div>
+    </div>
+
+</header>
+<div class="modal fade modal-wrapper" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="createsanphamModal">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+            <div class="col-lg-12 order-1 order-lg-2">
+                <div class="shop-toolbar">
+                    <div class="product-view-mode" >
+                        <a class="active grid-3" data-target="gridview-3" data-toggle="tooltip" data-placement="top" title="Grid View"><i class="fa fa-th"></i></a>
+                        <a class="list" data-target="listview" data-toggle="tooltip" data-placement="top" title="List View"><i class="fa fa-th-list"></i></a>
+                    </div>
+                    <div style="  background-color: #e25b57;
+                    border: none;
+                    color: white;
+                    padding: 5px 22px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin: 4px 2px;
+                    cursor: pointer;
+                    " 
+                    [ngClass]="{active: loc=='TD'}" (click)="setDieuKienLoc('TD')" class="name">Giá giảm dần</div>
+                    <div style="  background-color: #e25b57;
+                    border: none;
+                    color: white;
+                    padding: 5px 22px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin: 4px 2px;
+                    cursor: pointer;
+                    "  
+                    [ngClass]="{active: loc=='GD'}" (click)="setDieuKienLoc('GD')" class="name">Giá tăng dần</div>                                  
+                    <div class="product-item-selection_area">
+                        <div class="product-short">
+                            <label class="select-label">Trang:</label>
+                            <select class="name" class="form-control" (ngModelChange)="loadData($event)" [(ngModel)]="pageSize">
+                                <option value="6">6</option>
+                                <option value="12">12</option>
+                                <option value="24">24</option> 
+                                <option value="46">46</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="list_timkiem && list_timkiem.length > 0" class="shop-product-wrap grid gridview-3 row">
+                    <div *ngFor="let it of list_timkiem" class="col-lg-4">
+                        <div class="slide-item">
+                            <div  class="single_product">
+                                <div class="product-img">
+                                    <a [routerLink]="['/chi-tiet',it.maSanPham]">
+                                        <img class="primary-img" src="{{it.anhDaiDien}}" alt="Image">
+                                    </a>
+                                    <div class="add-actions">
+                                        <ul>   
+                                            <li><a class="hiraola-add_cart" (click)="_addToCart(it)" data-toggle="tooltip" data-placement="top" title="Thêm Vàp Giỏ Hàng"><i class="ion-bag"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="hiraola-product_content">
+                                    <div class="product-desc_info">
+                                        <h6><a class="product-name" [routerLink]="['/chi-tiet',it.maSanPham]">{{it.tenSanPham}}</a></h6>
+                                        <div class="price-box">
+                                            <span class="old-price">{{it.gia | number:'1.0-0' }}</span>
+                                        </div>
+                                        <div class="additional-add_action">
+                                            <ul>
+                                                <li>
+                                                    <span class="old-price">{{applyDiscount(it.gia, it.phanTram) | number:'1.0-0'}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- <div class="rating-box">
+                                            <ul>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li class="silver-color"><i class="fa fa-star"></i></li>
+                                            </ul>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-slide_item">
+                            <div class="single_product">
+                                <div class="product-img">
+                                    <a [routerLink]="['/chi-tiet',it.maSanPham]">
+                                        <img class="primary-img" src="{{it.anhDaiDien}}" alt="Image">
+                                    </a>
+                                </div>
+                                <div class="hiraola-product_content">
+                                    <div class="product-desc_info">
+                                        <h6><a class="product-name" [routerLink]="['/chi-tiet',it.maSanPham]">{{it.tenSanPham}}</a></h6>
+                                        <div class="additional-add_action">
+                                            <ul>
+                                                <li>
+                                                    <span class="old-price">{{applyDiscount(it.gia, it.phanTram) | number:'1.0-0'}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- <div class="rating-box">
+                                            <ul>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li class="silver-color"><i class="fa fa-star"></i></li>
+                                            </ul>
+                                        </div> --> 
+                                        <div class="product-short_desc">
+                                            <p style="height: 200px; overflow: auto; "[innerHTML]="it.moTaSanPham"></p>
+                                        </div>
+                                    </div>
+                                    <div class="add-actions">
+                                        <ul>
+                                            <li><a class="hiraola-add_cart" (click)="_addToCart(it)" data-toggle="tooltip" data-placement="top" title="Thêm Vàp Giỏ Hàng"><i class="ion-bag"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="hiraola-paginatoin-area">
+                            <div class="row">
+                                <ngb-pagination (pageChange)="loadPage($event)" [(page)]="page" [pageSize]="pageSize" [collectionSize]="totalItem">
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+		</div>
+	</div>
+</div> 
